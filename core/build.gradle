@@ -1,15 +1,21 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'maven'
+//    id 'maven'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
+//apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
+
+def libraryGroupId = 'moe.banana'
+def libraryArtifactId = 'moshi-jsonapi'
+def libraryVersion = '3.5.0-forked'
 
 sourceSets {
     test {
@@ -54,10 +60,41 @@ jacocoTestReport {
     }
 }
 
-publish {
-    groupId = 'moe.banana'
-    artifactId = 'moshi-jsonapi'
-    publishVersion = describeVersion()
-    desc = 'Implement JSON API v1.0 Specification in Moshi.'
-    website = 'https://github.com/kamikat/moshi-jsonapi'
+//publish {
+//    groupId = 'moe.banana'
+//    artifactId = 'moshi-jsonapi'
+//    publishVersion = describeVersion()
+//    desc = 'Implement JSON API v1.0 Specification in Moshi.'
+//    website = 'https://github.com/kamikat/moshi-jsonapi'
+//}
+
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId libraryGroupId
+            version libraryVersion
+            artifactId libraryArtifactId
+
+            artifact("$buildDir/libs/core.jar")
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'https://artifactory.orainteractive.com/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+
+            username = artifactory_username_implement
+            password = artifactory_password_implement
+        }
+        defaults {
+            publications('aar')
+            publishArtifacts = true
+
+            properties = ['qa.level': 'basic', 'q.os': 'android', 'dev.team': 'core']
+            publishPom = true
+        }
+    }
 }

@@ -1,0 +1,7 @@
+./gradlew core:clean
+./gradlew core:assemble
+./gradlew core:artifactoryPublish --info --debug
+
+./gradlew retrofit-converter:clean
+./gradlew retrofit-converter:assemble
+./gradlew retrofit-converter:artifactoryPublish --info --debug

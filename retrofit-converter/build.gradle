@@ -1,13 +1,19 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'maven'
+//    id 'maven'
 }
 
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
+//apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
+
+def libraryGroupId = 'moe.banana'
+def libraryArtifactId = 'moshi-jsonapi-retrofit-converter'
+def libraryVersion = '3.5.0-forked'
 
 sourceSets {
     test {
@@ -51,10 +57,42 @@ artifacts {
     archives javadocJar
 }
 
-publish {
-    groupId = 'moe.banana'
-    artifactId = 'moshi-jsonapi-retrofit-converter'
-    publishVersion = describeVersion()
-    desc = 'Retrofit converter extension for moshi-jsonapi library.'
-    website = 'https://github.com/kamikat/moshi-jsonapi'
+//publish {
+//    groupId = 'moe.banana'
+//    artifactId = 'moshi-jsonapi-retrofit-converter'
+//    publishVersion = describeVersion()
+//    desc = 'Retrofit converter extension for moshi-jsonapi library.'
+//    website = 'https://github.com/kamikat/moshi-jsonapi'
+//}
+
+
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId libraryGroupId
+            version libraryVersion
+            artifactId libraryArtifactId
+
+            artifact("$buildDir/libs/retrofit-converter.jar")
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'https://artifactory.orainteractive.com/artifactory'
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+
+            username = artifactory_username_implement
+            password = artifactory_password_implement
+        }
+        defaults {
+            publications('aar')
+            publishArtifacts = true
+
+            properties = ['qa.level': 'basic', 'q.os': 'android', 'dev.team': 'core']
+            publishPom = true
+        }
+    }
 }
