@@ -73,7 +73,7 @@ publishing {
             version libraryVersion
             artifactId libraryArtifactId
 
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+            artifact("$buildDir/libs/retrofit-converter.jar")
         }
     }
 }
