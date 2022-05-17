@@ -1,12 +1,12 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'maven'
+//    id 'maven'
     id 'jacoco'
     id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
@@ -54,10 +54,10 @@ jacocoTestReport {
     }
 }
 
-publish {
-    groupId = 'moe.banana'
-    artifactId = 'moshi-jsonapi'
-    publishVersion = describeVersion()
-    desc = 'Implement JSON API v1.0 Specification in Moshi.'
-    website = 'https://github.com/kamikat/moshi-jsonapi'
-}
+//publish {
+//    groupId = 'moe.banana'
+//    artifactId = 'moshi-jsonapi'
+//    publishVersion = describeVersion()
+//    desc = 'Implement JSON API v1.0 Specification in Moshi.'
+//    website = 'https://github.com/kamikat/moshi-jsonapi'
+//}

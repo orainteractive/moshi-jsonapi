@@ -1,10 +1,10 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'maven'
+//    id 'maven'
 }
 
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
@@ -51,10 +51,10 @@ artifacts {
     archives javadocJar
 }
 
-publish {
-    groupId = 'moe.banana'
-    artifactId = 'moshi-jsonapi-retrofit-converter'
-    publishVersion = describeVersion()
-    desc = 'Retrofit converter extension for moshi-jsonapi library.'
-    website = 'https://github.com/kamikat/moshi-jsonapi'
-}
+//publish {
+//    groupId = 'moe.banana'
+//    artifactId = 'moshi-jsonapi-retrofit-converter'
+//    publishVersion = describeVersion()
+//    desc = 'Retrofit converter extension for moshi-jsonapi library.'
+//    website = 'https://github.com/kamikat/moshi-jsonapi'
+//}
